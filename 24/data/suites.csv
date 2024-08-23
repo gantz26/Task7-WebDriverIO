@@ -1,0 +1,7 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Fri Aug 23 17:34:50 GMT 2024","Fri Aug 23 17:34:50 GMT 2024","476","","Login page","","","","Login with the empty password field",""
+"passed","Fri Aug 23 17:34:47 GMT 2024","Fri Aug 23 17:34:49 GMT 2024","1282","","Login page","","","","Login with valid credentials",""
+"passed","Fri Aug 23 17:34:49 GMT 2024","Fri Aug 23 17:34:49 GMT 2024","502","","Login page","","","","Login with the locked out user",""
+"passed","Fri Aug 23 17:34:50 GMT 2024","Fri Aug 23 17:34:51 GMT 2024","471","","Login page","","","","Login with an invalid username",""
+"passed","Fri Aug 23 17:34:51 GMT 2024","Fri Aug 23 17:34:51 GMT 2024","476","","Login page","","","","Login with an invalid password",""
+"passed","Fri Aug 23 17:34:49 GMT 2024","Fri Aug 23 17:34:50 GMT 2024","468","","Login page","","","","Login with the empty username field",""
