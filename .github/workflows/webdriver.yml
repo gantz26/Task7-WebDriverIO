@@ -19,10 +19,7 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm ci 
-
-      - name: Install Chrome
-        run: npm install chromedriver@latest --save-dev
+        run: npm ci
 
       - name: Create .env file
         run: |
@@ -30,7 +27,7 @@ jobs:
           echo VALID_PASSWORD=${{ secrets.VALID_PASSWORD }} >> .env
 
       - name: Run tests
-        run: npm run wdio:run:chrome
+        run: npm run wdio:run:edge
 
       - name: Get allure history
         uses: actions/checkout@v4
