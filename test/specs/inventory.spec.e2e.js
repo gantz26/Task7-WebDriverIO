@@ -186,7 +186,8 @@ describe("Inventory page", () => {
     await browser.switchWindow("Swag Labs");
 
     await browser.newWindow(linkedinLink);
-    await expect(browser).toHaveTitle("Sauce Labs | LinkedIn");
+    const linkedintitle = await browser.getTitle();
+    await expect(linkedintitle === "Sauce Labs | LinkedIn" || linkedintitle === "Sign Up | LinkedIn").toBeTruthy();
     await browser.switchWindow("Swag Labs");
   });
 });

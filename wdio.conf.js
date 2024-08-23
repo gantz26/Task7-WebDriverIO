@@ -51,9 +51,6 @@ export const config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    // capabilities: [{
-    //     browserName: process.env.BROWSER || 'chrome'
-    // }],
     capabilities: (() => {
         const browser = process.env.BROWSER || "chrome";
 
