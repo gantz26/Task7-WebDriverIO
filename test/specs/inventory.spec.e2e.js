@@ -22,7 +22,7 @@ describe("Inventory page", () => {
   it("Verifying the \"About\" link", async () => {
     await inventoryPage.burgerMenu.click();
     await inventoryPage.aboutLink.click();
-    await expect(await browser.getUrl()).toEqual("https://saucelabs.com/");
+    await expect(await browser.getTitle()).toEqual("Sauce Labs: Cross Browser Testing, Selenium Testing & Mobile Testing");
   });
 
   it("Verifying the \"All items\" link", async () => {
