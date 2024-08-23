@@ -190,7 +190,7 @@ describe("Inventory page", () => {
       await expect(browser).toHaveTitle("Sauce Labs | LinkedIn");
     }
     catch(error) {
-      await expect(browser).toHaveTitle("Sign UP | LinkedIn");
+      await expect(browser).toHaveTitle("Sign Up | LinkedIn");
     }
     await browser.switchWindow("Swag Labs");
   });
