@@ -22,8 +22,8 @@ npm ci
 
 3. Create .env file and add the username and the password there
 ```
-VALID_USERNAME="<your_username>"
-VALID_PASSWORD="<password>"
+VALID_USERNAME=<your_username>
+VALID_PASSWORD=<password>
 ```
 
 4. To run the tests use one of the next commands:
