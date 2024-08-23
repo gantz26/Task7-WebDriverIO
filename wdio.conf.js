@@ -72,8 +72,6 @@ export const config = {
             }];
         }
     })(),
-    
-    acceptInsecureCerts: true,
 
     //
     // ===================
