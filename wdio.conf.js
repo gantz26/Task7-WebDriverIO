@@ -53,12 +53,13 @@ export const config = {
     //
     capabilities: (() => {
         const browser = process.env.BROWSER || "chrome";
+        const headless = process.env.HEADLESS === "true";
 
         if (browser === "chrome") {
             return [{
                 browserName: "chrome",
                 'goog:chromeOptions': {
-                    args: ['--headless', '--disable-gpu'],
+                    args: [...(headless ? [ '--headless'] : []), '--disable-gpu'],
                 }
             }];
         }
@@ -66,7 +67,7 @@ export const config = {
             return [{
                 browserName: "firefox",
                 'moz:firefoxOptions': {
-                    args: ['--headless'],
+                    args: [...(headless ? [ '--headless'] : [])],
                 },
             }];
         }

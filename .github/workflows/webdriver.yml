@@ -31,7 +31,7 @@ jobs:
           echo VALID_PASSWORD=${{ secrets.VALID_PASSWORD }} >> .env
 
       - name: Run tests
-        run: npm run wdio:run:${{ matrix.browser }}
+        run: npm run wdio:run:${{ matrix.browser }}:headless
 
       - name: Get allure history
         uses: actions/checkout@v4
