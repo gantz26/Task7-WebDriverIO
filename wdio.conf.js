@@ -67,7 +67,7 @@ export const config = {
             return [{
                 browserName: "firefox",
                 'moz:firefoxOptions': {
-                    args: [...(headless ? [ '--headless'] : [])],
+                    args: [...(headless ? [ '--headless'] : []), '--disable-gpu'],
                 },
             }];
         }
