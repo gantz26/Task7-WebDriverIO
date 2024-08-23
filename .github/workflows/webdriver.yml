@@ -27,7 +27,7 @@ jobs:
           echo VALID_PASSWORD=${{ secrets.VALID_PASSWORD }} >> .env
 
       - name: Run tests
-        run: npm run wdio:run:firefox:headless:file checkout.spec.e2e.js
+        run: npm run wdio:run:firefox:headless
 
       - name: Get allure history
         uses: actions/checkout@v4
