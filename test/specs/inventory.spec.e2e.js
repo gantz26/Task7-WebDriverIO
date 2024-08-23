@@ -19,6 +19,25 @@ describe("Inventory page", () => {
     }
   });
 
+  it("Verifying the \"About\" link", async () => {
+    await inventoryPage.burgerMenu.click();
+    await inventoryPage.aboutLink.click();
+    await expect(await browser.getUrl()).toEqual("https://saucelabs.com/");
+  });
+
+  it("Verifying the \"All items\" link", async () => {
+    await inventoryPage.cartLink.click();
+    const cartTitle = await cartPage.title;
+    await expect(cartTitle).toBeExisting();
+    await expect(cartTitle).toHaveText("Your Cart");
+
+    await cartPage.burgetMenu.click();
+    await cartPage.allItemsLink.click();
+    const inventorytitle = await inventoryPage.title;
+    await expect(inventorytitle).toBeExisting();
+    await expect(inventorytitle).toHaveText("Products");
+  });
+
   it("Logout", async () => {
     await inventoryPage.burgerMenu.click();
     await inventoryPage.logoutLink.click();
@@ -105,25 +124,6 @@ describe("Inventory page", () => {
         }
       }
     }
-  });
-
-  it("Verifying the \"About\" link", async () => {
-    await inventoryPage.burgerMenu.click();
-    await inventoryPage.aboutLink.click();
-    await expect(await browser.getUrl()).toEqual("https://saucelabs.com/");
-  });
-
-  it("Verifying the \"All items\" link", async () => {
-    await inventoryPage.cartLink.click();
-    const cartTitle = await cartPage.title;
-    await expect(cartTitle).toBeExisting();
-    await expect(cartTitle).toHaveText("Your Cart");
-
-    await cartPage.burgetMenu.click();
-    await cartPage.allItemsLink.click();
-    const inventorytitle = await inventoryPage.title;
-    await expect(inventorytitle).toBeExisting();
-    await expect(inventorytitle).toHaveText("Products");
   });
 
   it("Chosen products are saved after logout", async () => {
