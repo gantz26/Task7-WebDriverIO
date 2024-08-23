@@ -22,7 +22,7 @@ describe("Inventory page", () => {
   it("Verifying the \"About\" link", async () => {
     await inventoryPage.burgerMenu.click();
     await inventoryPage.aboutLink.click();
-    await expect(await browser.getTitle()).toEqual("Sauce Labs: Cross Browser Testing, Selenium Testing & Mobile Testing");
+    await expect(await browser.getUrl()).toEqual("https://saucelabs.com/");
   });
 
   it("Verifying the \"All items\" link", async () => {
@@ -33,9 +33,9 @@ describe("Inventory page", () => {
 
     await cartPage.burgetMenu.click();
     await cartPage.allItemsLink.click();
-    const inventorytitle = await inventoryPage.title;
-    await expect(inventorytitle).toBeExisting();
-    await expect(inventorytitle).toHaveText("Products");
+    const inventoryTitle = await inventoryPage.title;
+    await expect(inventoryTitle).toBeExisting();
+    await expect(inventoryTitle).toHaveText("Products");
   });
 
   it("Logout", async () => {

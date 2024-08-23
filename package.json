@@ -8,6 +8,8 @@
     "wdio:run:firefox:headless": "cross-env BROWSER=firefox HEADLESS=true wdio run wdio.conf.js",
     "wdio:run:chrome:headless:file": "cross-env BROWSER=chrome HEADLESS=true wdio run wdio.conf.js --spec ",
     "wdio:run:firefox:headless:file": "cross-env BROWSER=firefox HEADLESS=true wdio run wdio.conf.js --spec ",
+    "wdio:run:chrome:file": "cross-env BROWSER=chrome wdio run wdio.conf.js --spec ",
+    "wdio:run:firefox:file": "cross-env BROWSER=firefox wdio run wdio.conf.js --spec ",
     "allure:generate": "allure generate allure-results --clean",
     "allure:open": "allure open"
   },
