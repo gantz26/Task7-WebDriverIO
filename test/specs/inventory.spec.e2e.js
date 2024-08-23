@@ -192,6 +192,5 @@ describe("Inventory page", () => {
     catch(error) {
       await expect(browser).toHaveTitle("Sign Up | LinkedIn");
     }
-    await browser.switchWindow("Swag Labs");
   });
 });
