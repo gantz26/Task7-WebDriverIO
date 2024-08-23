@@ -24,6 +24,11 @@ jobs:
       - name: Install dependencies
         run: npm i 
 
+      - name: Create .env file
+        run: |
+          echo VALID_USERNAME=${{ secrets.VALID_USERNAME }} > .env
+          echo VALID_PASSWORD=${{ secrets.VALID_PASSWORD }} >> .env
+
       - name: Run tests
         run: npm run wdio:run:${{ matrix.browser }}
 
