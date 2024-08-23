@@ -9,10 +9,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        browser: chrome
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
