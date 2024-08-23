@@ -19,7 +19,10 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm i 
+        run: npm ci 
+
+      - name: Install Chrome
+        run: npm install chromedriver@latest --save-dev
 
       - name: Create .env file
         run: |
