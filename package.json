@@ -4,7 +4,6 @@
   "scripts": {
     "wdio:run:chrome": "cross-env BROWSER=chrome wdio run wdio.conf.js",
     "wdio:run:firefox": "cross-env BROWSER=firefox wdio run wdio.conf.js",
-    "wdio:run:edge": "cross-env BROWSER=edge wdio run wdio.conf.js",
     "allure:generate": "allure generate allure-results --clean",
     "allure:open": "allure open"
   },
