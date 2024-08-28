@@ -23,7 +23,7 @@ export const config = {
     // of the config file unless it's absolute.
     //
     specs: [
-        './test/specs/**/*.js'
+        '../test/specs/**/*.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -51,27 +51,14 @@ export const config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    capabilities: (() => {
-        const browser = process.env.BROWSER || "chrome";
-        const headless = process.env.HEADLESS === "true";
-
-        if (browser === "chrome") {
-            return [{
-                browserName: "chrome",
-                'goog:chromeOptions': {
-                    args: [...(headless ? [ '--headless'] : []), '--disable-gpu'],
-                }
-            }];
+    capabilities: [
+        {
+            browserName: "chrome",
+            'goog:chromeOptions': {
+                args: [...((process.env.HEADLESS === "true") ? [ '--headless'] : ["--window-size=1920,1080"]), '--disable-gpu']
+            }
         }
-        else if (browser === "firefox") {
-            return [{
-                browserName: "firefox",
-                'moz:firefoxOptions': {
-                    args: [...(headless ? [ '--headless'] : [])],
-                },
-            }];
-        }
-    })(),
+    ],
 
     //
     // ===================
