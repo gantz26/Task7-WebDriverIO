@@ -21,7 +21,7 @@ class LoginPage extends Page {
         return $(".login_logo");
     }
 
-    async login (username, password) {
+    async login (username = process.env.VALID_USERNAME, password = process.env.VALID_PASSWORD) {
         await this.usernameInput.setValue(username);
         await this.passwordInput.setValue(password);
         await this.loginButton.click();

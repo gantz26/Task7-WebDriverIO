@@ -46,7 +46,7 @@ class CartPage extends Page {
     return $("#finish");
   }
 
-  get cancelbutton() {
+  get cancelButton() {
     return $("#cancel");
   }
 
@@ -56,6 +56,13 @@ class CartPage extends Page {
 
   get errorMessage() {
     return $(".error-message-container.error");
+  }
+
+  async fillCheckoutInfo(firstName, lastName, zipCode) {
+    await (await this.firstNameInput).setValue(firstName);
+    await (await this.lastNameInput).setValue(lastName);
+    await (await this.zipCodeInput).setValue(zipCode);
+    await (await this.continueButton).click();
   }
 
   async getProductByTitle(productTitle) {
@@ -68,6 +75,26 @@ class CartPage extends Page {
 
   async getRemoveButton(product) {
     return await inventoryPage.getRemoveButton(product);
+  }
+
+  async clickRemoveButton(product) {
+    await (await this.getRemoveButton(product)).click();
+  }
+
+  async clickAllItemsLink() {
+    await (await this.allItemsLink).click();
+  }
+
+  async clickCheckoutButton() {
+    await (await this.checkoutButton).click();
+  }
+
+  async clickFinishButton() {
+    await (await this.finishButton).click();
+  }
+
+  async clickCancelButton() {
+    await (await this.cancelButton).click();
   }
 }
 

@@ -82,6 +82,34 @@ class InventoryPage extends Page {
   async getRemoveButton(product) {
     return await product.$(".btn_secondary");
   }
+
+  async clickAddButton(product) {
+    await (await this.getAddButton(product)).click();
+  }
+
+  async clickBurgerMenu() {
+    await (await this.burgerMenu).click();
+  }
+
+  async clickAboutLink() {
+    await (await this.aboutLink).click();
+  }
+
+  async clickCartLink() {
+    await (await this.cartLink).click();
+  }
+
+  async clickLogoutLink() {
+    await (await this.logoutLink).click();
+  }
+
+  async clickSortContainer() {
+    await (await this.sortContainer).click();
+  }
+
+  async clickProductLink(product) {
+    await (await this.getProductLink(product)).click();
+  }
 }
 
 export default new InventoryPage();

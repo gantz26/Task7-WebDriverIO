@@ -8,19 +8,19 @@ describe("Login page", () => {
     });
 
     it("Login with valid credentials", async () => {
-        await loginPage.login(process.env.VALID_USERNAME, process.env.VALID_PASSWORD);
+        await loginPage.login();
         await expect(inventoryPage.title).toBeExisting();
         await expect(inventoryPage.title).toHaveText("Products");
     });
 
     it("Login with the locked out user", async () => {
-        await loginPage.login("locked_out_user", process.env.VALID_PASSWORD);
+        await loginPage.login("locked_out_user");
         await expect(loginPage.errorMessage).toBeExisting();
         await expect(loginPage.errorMessage).toHaveText("Epic sadface: Sorry, this user has been locked out.");
     });
 
     it("Login with the empty username field", async () => {
-        await loginPage.login("", process.env.VALID_PASSWORD);
+        await loginPage.login("");
         await expect(loginPage.errorMessage).toBeExisting();
         await expect(loginPage.errorMessage).toHaveText("Epic sadface: Username is required");
     });
@@ -32,7 +32,7 @@ describe("Login page", () => {
     });
 
     it("Login with an invalid username", async () => {
-        await loginPage.login(faker.internet.userName(), process.env.VALID_PASSWORD);
+        await loginPage.login(faker.internet.userName());
         await expect(loginPage.errorMessage).toBeExisting();
         await expect(loginPage.errorMessage).toHaveText("Epic sadface: Username and password do not match any user in this service");
     });

@@ -9,7 +9,7 @@ describe("Checkout", () => {
 
   beforeEach(async () => {
     await loginPage.open();
-    await loginPage.login(process.env.VALID_USERNAME, process.env.VALID_PASSWORD);
+    await loginPage.login();
     await expect(inventoryPage.title).toBeExisting();
     await expect(inventoryPage.title).toHaveText("Products");
 
@@ -24,15 +24,14 @@ describe("Checkout", () => {
     const product = await inventoryPage.getAnyProduct();
     productTitle = await inventoryPage.getProductTitle(product);
     productPrice = await inventoryPage.getProductPrice(product);
-    const addButton = await inventoryPage.getAddButton(product);
 
     const cartNumberElem = await inventoryPage.cartNumber;
     const cartNumber = (await cartNumberElem.isDisplayed()) ? parseInt(await cartNumberElem.getText()) : 0;
-    await addButton.click();
+    await inventoryPage.clickAddButton(product);
     await expect(await inventoryPage.getRemoveButton(product)).toBeExisting();
     await expect(parseInt(await cartNumberElem.getText())).toEqual(cartNumber + 1);
 
-    await inventoryPage.cartLink.click();
+    await inventoryPage.clickCartLink();
     const cartTitle = await cartPage.title;
     await expect(cartTitle).toBeExisting();
     await expect(cartTitle).toHaveText("Your Cart");
@@ -42,15 +41,12 @@ describe("Checkout", () => {
   });
 
   it("Checkout", async () => {
-    await cartPage.checkoutButton.click();
+    await cartPage.clickCheckoutButton();
     let pageTitle = await cartPage.title;;
     await expect(pageTitle).toBeExisting();
     await expect(pageTitle).toHaveText("Checkout: Your Information");
 
-    await cartPage.firstNameInput.setValue(faker.person.firstName());
-    await cartPage.lastNameInput.setValue(faker.person.lastName());
-    await cartPage.zipCodeInput.setValue(faker.location.zipCode());
-    await cartPage.continueButton.click();
+    await cartPage.fillCheckoutInfo(faker.person.firstName(), faker.person.lastName(), faker.location.zipCode());
 
     pageTitle = await cartPage.title;;
     await expect(pageTitle).toBeExisting();
@@ -59,62 +55,47 @@ describe("Checkout", () => {
     await expect(productCart).toBeExisting();
     await expect(await cartPage.getProductPrice(productCart)).toEqual(productPrice);
 
-    await cartPage.finishButton.click();
+    await cartPage.clickFinishButton();
     await expect(await cartPage.checkoutComplete).toHaveText("Thank you for your order!");
   });
 
   it("Checkout with empty first name field", async () => {
-    await cartPage.checkoutButton.click();
+    await cartPage.clickCheckoutButton();
     let pageTitle = await cartPage.title;;
     await expect(pageTitle).toBeExisting();
     await expect(pageTitle).toHaveText("Checkout: Your Information");
 
-    await cartPage.firstNameInput.setValue("");
-    await cartPage.lastNameInput.setValue(faker.person.lastName());
-    await cartPage.zipCodeInput.setValue(faker.location.zipCode());
-    await cartPage.continueButton.click();
-    
+    await cartPage.fillCheckoutInfo("", faker.person.lastName(), faker.location.zipCode());
     await expect(await cartPage.errorMessage).toHaveText("Error: First Name is required");
   });
 
   it("Checkout with empty last name field", async () => {
-    await cartPage.checkoutButton.click();
+    await cartPage.clickCheckoutButton();
     let pageTitle = await cartPage.title;;
     await expect(pageTitle).toBeExisting();
     await expect(pageTitle).toHaveText("Checkout: Your Information");
 
-    await cartPage.firstNameInput.setValue(faker.person.firstName());
-    await cartPage.lastNameInput.setValue("");
-    await cartPage.zipCodeInput.setValue(faker.location.zipCode());
-    await cartPage.continueButton.click();
-    
+    await cartPage.fillCheckoutInfo(faker.person.firstName(), "", faker.location.zipCode());
     await expect(await cartPage.errorMessage).toHaveText("Error: Last Name is required");
   });
 
   it("Checkout with empty zip code field", async () => {
-    await cartPage.checkoutButton.click();
+    await cartPage.clickCheckoutButton();
     let pageTitle = await cartPage.title;;
     await expect(pageTitle).toBeExisting();
     await expect(pageTitle).toHaveText("Checkout: Your Information");
 
-    await cartPage.firstNameInput.setValue(faker.person.firstName());
-    await cartPage.lastNameInput.setValue(faker.person.lastName());
-    await cartPage.zipCodeInput.setValue("");
-    await cartPage.continueButton.click();
-    
+    await cartPage.fillCheckoutInfo(faker.person.firstName(), faker.person.lastName(), "");
     await expect(await cartPage.errorMessage).toHaveText("Error: Postal Code is required");
   });
 
   it("Cancel the checkout", async () => {
-    await cartPage.checkoutButton.click();
+    await cartPage.clickCheckoutButton();
     let pageTitle = await cartPage.title;;
     await expect(pageTitle).toBeExisting();
     await expect(pageTitle).toHaveText("Checkout: Your Information");
 
-    await cartPage.firstNameInput.setValue(faker.person.firstName());
-    await cartPage.lastNameInput.setValue(faker.person.lastName());
-    await cartPage.zipCodeInput.setValue(faker.location.zipCode());
-    await cartPage.continueButton.click();
+    await cartPage.fillCheckoutInfo(faker.person.firstName(), faker.person.lastName(), faker.location.zipCode());
 
     pageTitle = await cartPage.title;;
     await expect(pageTitle).toBeExisting();
@@ -123,7 +104,7 @@ describe("Checkout", () => {
     await expect(productCart).toBeExisting();
     await expect(await cartPage.getProductPrice(productCart)).toEqual(productPrice);
 
-    await cartPage.cancelbutton.click();
+    await cartPage.clickCancelButton();
     const inventorytitle = await inventoryPage.title;
     await expect(inventorytitle).toBeExisting();
     await expect(inventorytitle).toHaveText("Products");

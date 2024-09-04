@@ -6,7 +6,7 @@ import productPage from "../pageobjects/product.page.js";
 describe("Inventory page", () => {
   beforeEach(async () => {
     await loginPage.open();
-    await loginPage.login(process.env.VALID_USERNAME, process.env.VALID_PASSWORD);
+    await loginPage.login();
     await expect(inventoryPage.title).toBeExisting();
     await expect(inventoryPage.title).toHaveText("Products");
 
@@ -20,27 +20,27 @@ describe("Inventory page", () => {
   });
 
   it("Verifying the \"About\" link", async () => {
-    await inventoryPage.burgerMenu.click();
-    await inventoryPage.aboutLink.click();
+    await inventoryPage.clickBurgerMenu();
+    await inventoryPage.clickAboutLink();
     await expect(await browser.getUrl()).toEqual("https://saucelabs.com/");
   });
 
   it("Verifying the \"All items\" link", async () => {
-    await inventoryPage.cartLink.click();
+    await inventoryPage.clickCartLink();
     const cartTitle = await cartPage.title;
     await expect(cartTitle).toBeExisting();
     await expect(cartTitle).toHaveText("Your Cart");
 
-    await cartPage.burgetMenu.click();
-    await cartPage.allItemsLink.click();
+    await inventoryPage.clickBurgerMenu();
+    await cartPage.clickAllItemsLink();
     const inventoryTitle = await inventoryPage.title;
     await expect(inventoryTitle).toBeExisting();
     await expect(inventoryTitle).toHaveText("Products");
   });
 
   it("Logout", async () => {
-    await inventoryPage.burgerMenu.click();
-    await inventoryPage.logoutLink.click();
+    await inventoryPage.clickBurgerMenu();
+    await inventoryPage.clickLogoutLink();
     await expect(loginPage.title).toBeExisting();
     await expect(loginPage.title).toHaveText("Swag Labs");
   });
@@ -49,21 +49,19 @@ describe("Inventory page", () => {
     const product = await inventoryPage.getAnyProduct();
     const title = await inventoryPage.getProductTitle(product);
     const price = await inventoryPage.getProductPrice(product);
-    const addButton = await inventoryPage.getAddButton(product);
 
     const cartNumberElem = await inventoryPage.cartNumber;
     const cartNumber = (await cartNumberElem.isDisplayed()) ? parseInt(await cartNumberElem.getText()) : 0;
-    await addButton.click();
+    await inventoryPage.clickAddButton(product);
     await expect(await inventoryPage.getRemoveButton(product)).toBeExisting();
     await expect(parseInt(await cartNumberElem.getText())).toEqual(cartNumber + 1);
 
-    await inventoryPage.cartLink.click();
+    await inventoryPage.clickCartLink();
     const productCart = await cartPage.getProductByTitle(title);
     await expect(productCart).toBeExisting();
     await expect(await cartPage.getProductPrice(productCart)).toEqual(price);
 
-    const removeButton = await cartPage.getRemoveButton(productCart);
-    await removeButton.click();
+    await cartPage.clickRemoveButton(productCart);
     await expect(productCart).not.toBeExisting();
     await expect(cartNumberElem).not.toBeExisting();
   });
@@ -72,23 +70,21 @@ describe("Inventory page", () => {
     const product = await inventoryPage.getAnyProduct();
     const title = await inventoryPage.getProductTitle(product);
     const price = await inventoryPage.getProductPrice(product);
-    const addButton = await inventoryPage.getAddButton(product);
 
     const cartNumberElem = await inventoryPage.cartNumber;
     const cartNumber = (await cartNumberElem.isDisplayed()) ? parseInt(await cartNumberElem.getText()) : 0;
-    await addButton.click();
+    await inventoryPage.clickAddButton(product);
     await expect(await inventoryPage.getRemoveButton(product)).toBeExisting();
     await expect(parseInt(await cartNumberElem.getText())).toEqual(cartNumber + 1);
 
-    await inventoryPage.cartLink.click();
+    await inventoryPage.clickCartLink();
     const productCart = await cartPage.getProductByTitle(title);
     await expect(productCart).toBeExisting();
     await expect(await cartPage.getProductPrice(productCart)).toEqual(price);
   });
 
   it("Sorting products", async () => {
-    const sortContainer = await inventoryPage.sortContainer;
-    await sortContainer.click();
+    await inventoryPage.clickSortContainer();
     const sortOptions = await inventoryPage.sortOptions;
 
     for (const option of sortOptions) {
@@ -130,25 +126,24 @@ describe("Inventory page", () => {
     const product = await inventoryPage.getAnyProduct();
     const title = await inventoryPage.getProductTitle(product);
     const price = await inventoryPage.getProductPrice(product);
-    const addButton = await inventoryPage.getAddButton(product);
 
     const cartNumberElem = await inventoryPage.cartNumber;
     const cartNumber = (await cartNumberElem.isDisplayed()) ? parseInt(await cartNumberElem.getText()) : 0;
-    await addButton.click();
+    await inventoryPage.clickAddButton(product);
     await expect(await inventoryPage.getRemoveButton(product)).toBeExisting();
     await expect(parseInt(await cartNumberElem.getText())).toEqual(cartNumber + 1);
 
-    await inventoryPage.burgerMenu.click();
-    await inventoryPage.logoutLink.click();
+    await inventoryPage.clickBurgerMenu();
+    await inventoryPage.clickLogoutLink();
     await expect(loginPage.title).toBeExisting();
     await expect(loginPage.title).toHaveText("Swag Labs");
 
     await loginPage.open();
-    await loginPage.login(process.env.VALID_USERNAME, process.env.VALID_PASSWORD);
+    await loginPage.login();
     await expect(inventoryPage.title).toBeExisting();
     await expect(inventoryPage.title).toHaveText("Products");
 
-    await inventoryPage.cartLink.click();
+    await inventoryPage.clickCartLink();
     const productCart = await cartPage.getProductByTitle(title);
     await expect(productCart).toBeExisting();
     await expect(await cartPage.getProductPrice(productCart)).toEqual(price);
@@ -156,13 +151,12 @@ describe("Inventory page", () => {
 
   it("Verifying the product page", async () => {
     const product = await inventoryPage.getAnyProduct();
-    const link = await inventoryPage.getProductLink(product);
     const title = await inventoryPage.getProductTitle(product);
     const price = await inventoryPage.getProductPrice(product);
     const description = await inventoryPage.getProductDescription(product);
     const image = await inventoryPage.getProductImage(product);
 
-    await link.click();
+    await inventoryPage.clickProductLink(product);
     await expect(await productPage.productTitle).toEqual(title);
     await expect(await productPage.productPrice).toEqual(price);
     await expect(await productPage.productDescription).toEqual(description);
@@ -170,12 +164,9 @@ describe("Inventory page", () => {
   });
 
   it("Verifying the social media links", async () => {
-    const twiter = await inventoryPage.twiterLink;
-    const twiterLink = await twiter.getAttribute("href");
-    const facebook = await inventoryPage.facebookLink;
-    const facebookLink = await facebook.getAttribute("href");
-    const linkedin = await inventoryPage.linkedinLink;
-    const linkedinLink = await linkedin.getAttribute("href");
+    const twiterLink = await (await inventoryPage.twiterLink).getAttribute("href");
+    const facebookLink = await (await inventoryPage.facebookLink).getAttribute("href");
+    const linkedinLink = await (await inventoryPage.linkedinLink).getAttribute("href");
 
     await browser.newWindow(twiterLink);
     await expect(browser).toHaveTitle("Sauce Labs (@saucelabs) / X");
