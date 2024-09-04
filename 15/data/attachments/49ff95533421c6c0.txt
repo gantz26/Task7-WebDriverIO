@@ -1,3 +1,0 @@
-{
-  "handle": "0e0150ae-d098-4a15-a6aa-2c1bd9d48ee7"
-}
